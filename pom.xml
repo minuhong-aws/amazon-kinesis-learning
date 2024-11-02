@@ -7,10 +7,8 @@
     <packaging>jar</packaging>
     <name>Amazon Kinesis Tutorial</name>
     <version>0.0.1</version>
-    <description>Tutorial and examples for aws-kinesis-client
-    </description>
+    <description>Tutorial and examples for aws-kinesis-client</description>
     <url>https://aws.amazon.com/kinesis</url>
-
     <scm>
         <url>https://github.com/awslabs/amazon-kinesis-learning.git</url>
     </scm>
@@ -24,9 +22,29 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-- Add the Shade Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.amazonaws.services.kinesis.samples.stocktrades.writer.StockTradesWriter</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
     <licenses>
         <license>
             <name>Amazon Software License</name>
@@ -34,11 +52,9 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
     <properties>
         <aws-kinesis-client.version>2.2.8</aws-kinesis-client.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>software.amazon.kinesis</groupId>
@@ -50,9 +66,11 @@
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
         </dependency>
+        <!-- Add Jackson for JSON processing -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
+        </dependency>
     </dependencies>
-
-
-
-
 </project>
